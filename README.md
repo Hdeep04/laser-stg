@@ -5,13 +5,21 @@ HTML5 Canvas と Web Audio で動作し、外部の画像・音声アセット�
 
 Google のワークショップで作成しました。
 
-## 遊び方
+## 遊ぶ
+
+ブラウザで開くだけで遊べます: **https://hdeep04.github.io/laser-stg/**
+
+### ローカルで動かす場合
+
+`index.html` をブラウザで開くだけで動きます。Node.js 18 以上が入っていれば、次でも起動できます。
 
 ```bash
 npm start
 ```
 
-ブラウザで http://localhost:8080 を開きます(Node.js 18 以上)。`index.html` を直接開いても動きます。
+起動後、http://localhost:8080 を開きます。
+
+## 操作
 
 | 操作 | キー |
 | :--- | :--- |
