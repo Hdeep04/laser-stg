@@ -4,6 +4,7 @@
 HTML5 Canvas と Web Audio で動作し、外部の画像・音声アセットは使っていません。
 
 Google のワークショップで作成しました。
+制作の記録は [WORKSHOP.md](WORKSHOP.md) にあります。
 
 ## 遊ぶ
 
