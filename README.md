@@ -1,0 +1,35 @@
+# Laser STG
+
+横スクロール型の2Dシューティングゲーム。貫通ロングレーザーと、自機の軌跡を追従する最大4機のオプションが特徴です。
+HTML5 Canvas と Web Audio で動作し、外部の画像・音声アセットは使っていません。
+
+Google のワークショップで作成しました。
+
+## 遊び方
+
+```bash
+npm start
+```
+
+ブラウザで http://localhost:8080 を開きます(Node.js 18 以上)。`index.html` を直接開いても動きます。
+
+| 操作 | キー |
+| :--- | :--- |
+| 移動 | 矢印キー / WASD |
+| ショット(押しっぱなしで連射) | Z / Space / J |
+| パワーアップ発動 | X / Shift / K / Enter |
+| ポーズ | P / Esc |
+
+## テスト
+
+```bash
+npm test
+```
+
+## 構成
+
+- `index.html` / `style.css` : 画面
+- `src/` : ゲーム本体(自機・敵・武器・当たり判定・描画・サウンドなど)
+- `server.js` : 静的ファイル配信サーバー(Cloud Run 対応)
+- `tests/verify-spec.js` : 仕様検証テスト
+- `gradius-laser-stg-spec.md` : 開発仕様書

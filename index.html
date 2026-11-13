@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GRADIUS LASER - Hyper Winder STG</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="arcade-wrapper">
+    <header class="arcade-header">
+      <div class="arcade-title">GRADIUS LASER // HYPER WINDER STG</div>
+      <div class="arcade-subtitle">800×600 60FPS | ZERO-GC POOL ENGINE | WEB AUDIO SYNTH</div>
+    </header>
+
+    <div class="canvas-frame">
+      <canvas id="gameCanvas" width="800" height="600"></canvas>
+    </div>
+
+    <nav class="control-toolbar" aria-label="Game Quick Controls">
+      <button id="btnStart" class="btn btn-gold" type="button">START / RESTART</button>
+      <button id="btnPowerUp" class="btn" type="button">ACTIVATE POWER-UP [X]</button>
+      <button id="btnCapsule" class="btn" type="button">+RED CAPSULE [1]</button>
+      <button id="btnFullPower" class="btn btn-hyper" type="button">FULL HYPER LASER + 4 OPTIONS [2]</button>
+      <button id="btnBoss" class="btn" type="button">SUMMON BIG CORE BOSS [3]</button>
+      <button id="btnPause" class="btn" type="button">PAUSE [P]</button>
+      <button id="btnMute" class="btn" type="button">MUTE AUDIO [M]</button>
+      <button id="btnDebug" class="btn" type="button">TELEMETRY [F3]</button>
+    </nav>
+  </main>
+
+  <!-- モジュール群の読み込み -->
+  <script src="src/config.js"></script>
+  <script src="src/pool.js"></script>
+  <script src="src/audio.js"></script>
+  <script src="src/terrain.js"></script>
+  <script src="src/player.js"></script>
+  <script src="src/weapons.js"></script>
+  <script src="src/effects.js"></script>
+  <script src="src/enemies.js"></script>
+  <script src="src/collision.js"></script>
+  <script src="src/ui.js"></script>
+  <script src="src/game.js"></script>
+
+  <script>
+    (function () {
+      'use strict';
+      const canvas = document.getElementById('gameCanvas');
+      const game = new window.GradiusSTG.GameStateManager(canvas);
+      window.gameInstance = game;
+      game.startLoop();
+
+      // ツールバーボタン操作バインド（クリック後にフォーカスを外してスペースキー誤発火を防止）
+      const bindBtn = (id, handler) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener('click', (e) => {
+          e.currentTarget.blur();
+          game.sound.init();
+          handler();
+        });
+      };
+
+      bindBtn('btnStart', () => game.startNewGame());
+      bindBtn('btnPowerUp', () => {
+        if (game.state === 'PLAYING') {
+          game.gauge.activate(game.player, game.sound, game.effects);
+        }
+      });
+      bindBtn('btnCapsule', () => {
+        if (game.state !== 'PLAYING') game.startNewGame();
+        game.onCapsuleCollected(false, game.player.x, game.player.y);
+      });
+      bindBtn('btnFullPower', () => game.applyFullPowerPreset());
+      bindBtn('btnBoss', () => {
+        if (game.state !== 'PLAYING') game.startNewGame();
+        game.enemies.startBossSequence(game.sound, false);
+      });
+      bindBtn('btnPause', () => {
+        if (game.state === 'PLAYING') game.state = 'PAUSED';
+        else if (game.state === 'PAUSED') game.state = 'PLAYING';
+      });
+      bindBtn('btnMute', () => {
+        const muted = game.sound.toggleMute();
+        document.getElementById('btnMute').textContent = muted ? 'UNMUTE AUDIO [M]' : 'MUTE AUDIO [M]';
+      });
+      bindBtn('btnDebug', () => {
+        game.ui.showDebug = !game.ui.showDebug;
+      });
+    })();
+  </script>
+</body>
+</html>

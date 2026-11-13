@@ -1,0 +1,13 @@
+{
+  "name": "gradius-laser-stg",
+  "version": "1.0.0",
+  "description": "Gradius-style Penetrating Laser & Option Winder 2D Shooting Game",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node tests/verify-spec.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
